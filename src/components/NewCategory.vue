@@ -112,8 +112,16 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .switch {
   margin-bottom: 25px;
+}
+
+.col {
+  border-left: 1px solid #999;
+
+  &:first-child {
+    border: none;
+  }
 }
 </style>

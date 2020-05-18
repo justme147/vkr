@@ -133,7 +133,7 @@ export default {
       this.order.push(item);
       // this.$root.$emit("updateOrder", this.order);
       this.$emit("update", this.order);
-      this.$emit("updatePrice", this.orderPrice);
+      this.$emit("updatePrice", this.orderPrice, this.orderExpenses);
       // console.log({ ...this.order });
     }
   },
@@ -141,6 +141,12 @@ export default {
     orderPrice() {
       const result = this.order.reduce((sum, current) => {
         return sum + +current.price;
+      }, 0);
+      return result;
+    },
+    orderExpenses() {
+      const result = this.order.reduce((sum, current) => {
+        return sum + +current.expenses;
       }, 0);
       return result;
     }

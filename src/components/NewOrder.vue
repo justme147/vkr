@@ -18,6 +18,7 @@
       :order="order"
       :info="info"
       :price="orderPrice"
+      :expenses="orderExpenses"
       @update="updateOrder"
       @updateInfo="updateInfo"
       @updatePrice="updatePrice"
@@ -36,7 +37,8 @@ export default {
       ],
       order: [],
       info: {},
-      orderPrice: 0
+      orderPrice: 0,
+      orderExpenses: 0
     };
   },
   methods: {
@@ -44,8 +46,9 @@ export default {
       // this.order.push(item);
       this.order = item;
     },
-    updatePrice(item) {
-      this.orderPrice = item;
+    updatePrice(price, expenses) {
+      this.orderPrice = price;
+      this.orderExpenses = expenses;
     },
     updateInfo(item) {
       this.info = item;

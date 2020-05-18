@@ -96,7 +96,8 @@ export default {
       discount: [],
       clickItem: "",
       positions: this.$attrs.order,
-      price: this.$attrs.price
+      price: this.$attrs.price,
+      expenses: this.$attrs.expenses
     };
   },
   async mounted() {
@@ -119,14 +120,6 @@ export default {
       }
 
       if (item.type === "position") {
-        // console.log(item);
-        // const filterPos = item.positions.map(pos => {
-        //   console.log(pos);
-        //   return this.positions.filter(res => res.id === pos.id);
-        // });
-
-        // console.log(filterPos);
-
         const filterPos = [];
 
         for (let i = 0; i < item.positions.length; i++) {
@@ -145,6 +138,9 @@ export default {
           item.positions.map(pos => {
             this.positions.push({ ...pos, price: 0 });
           });
+          this.expenses = this.positions.reduce((sum, current) => {
+            return sum + +current.expenses;
+          }, 0);
         } else if (
           filterPos.length < item.positions.length &&
           +item.discount === 100
@@ -178,6 +174,9 @@ export default {
           this.price = this.positions.reduce((sum, current) => {
             return sum + +current.price;
           }, 0);
+          this.expenses = this.positions.reduce((sum, current) => {
+            return sum + +current.expenses;
+          }, 0);
         } else {
           const findPos = filterPos.map(pos => {
             return this.positions.indexOf(pos);
@@ -197,14 +196,10 @@ export default {
           this.price = this.positions.reduce((sum, current) => {
             return sum + +current.price;
           }, 0);
+          this.expenses = this.positions.reduce((sum, current) => {
+            return sum + +current.expenses;
+          }, 0);
         }
-
-        // if (filterPos[0].length === 0 && +item.discount === 100) {
-        //   this.positions.push(...item.positions);
-        // }
-
-        // if (filter[0].length !== 0) {
-        // }
       }
     },
     clickItemHandler(id) {
@@ -220,7 +215,8 @@ export default {
           positions: this.positions,
           ...this.$attrs.info,
           price: this.price,
-          date: new Date().toJSON()
+          date: new Date().toJSON(),
+          expenses: this.expenses
         };
 
         console.log(formData);
@@ -230,6 +226,7 @@ export default {
         this.$message("Заказ успешно оформлен");
         this.$emit("update", []);
         this.$emit("updateInfo", {});
+        this.$emit("updatePrice", 0, 0);
         this.$router.push("/");
       } catch (e) {}
     }

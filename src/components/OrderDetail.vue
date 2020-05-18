@@ -90,22 +90,18 @@ export default {
 
     if (this.order.positions) {
       this.order.positions.map(async item => {
-        const position = await this.$store.dispatch(
-          "fetchPositionById",
-          item.id
-        );
         const category = await this.$store.dispatch(
           "fetchCategoryById",
-          position.categoryId
+          item.categoryId
         );
         const subcategory = await this.$store.dispatch(
           "fetchSubCategoryById",
-          position.subCategoryId
+          item.subCategoryId
         );
 
         this.positions.push({
-          id: position.id,
-          title: position.title,
+          id: item.id,
+          title: item.title,
           categoryTitle: category.title,
           subCategoryTitle: subcategory.title,
           price: item.price
@@ -145,6 +141,7 @@ export default {
   &__positions {
     display: flex;
     flex-wrap: wrap;
+    border-right: 1px solid #263238;
   }
 
   &__item {
@@ -161,7 +158,6 @@ export default {
   }
 
   &__info {
-    border-left: 1px solid #263238;
     padding: 10px 20px;
     min-width: 300px;
     // text-align: right;

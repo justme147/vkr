@@ -47,9 +47,31 @@
             class="helper-text invalid"
             v-if="$v.price.$dirty && !$v.price.required"
           >Введите цену</span>
-          <span class="helper-text invalid" v-else-if="$v.price.$dirty && !$v.title.minValue">
+          <span class="helper-text invalid" v-else-if="$v.price.$dirty && !$v.price.minValue">
             Цена не должна быть меньше
             {{ $v.price.$params.minValue.min }}
+          </span>
+        </div>
+
+        <div class="input-field">
+          <input
+            id="expenses"
+            type="text"
+            v-model="expenses"
+            :class="{
+              invalid:
+                ($v.expenses.$dirty && !$v.expenses.required) ||
+                ($v.expenses.$dirty && !v.expenses.minValue),
+            }"
+          />
+          <label for="expenses">Затраты</label>
+          <span
+            class="helper-text invalid"
+            v-if="$v.expenses.$dirty && !$v.expenses.required"
+          >Введите затраты</span>
+          <span class="helper-text invalid" v-else-if="$v.expenses.$dirty && !$v.expenses.minValue">
+            Затраты не должны быть меньше
+            {{ $v.expenses.$params.minValue.min }}
           </span>
         </div>
 
@@ -82,12 +104,14 @@ export default {
       current: null,
       currentSub: null,
       title: "",
-      price: null
+      price: null,
+      expenses: null
     };
   },
   validations: {
     title: { required },
-    price: { required, minValue: minValue(0) }
+    price: { required, minValue: minValue(0) },
+    expenses: { required, material: minValue(0) }
   },
   created() {
     this.current = this.subcategories[0].categoryId;
@@ -108,10 +132,12 @@ export default {
           categoryId: this.current,
           subCategoryId: this.currentSub,
           title: this.title,
-          price: this.price
+          price: this.price,
+          expenses: this.expenses
         });
         this.title = "";
         this.price = "";
+        this.expenses = "";
         this.$message("Позиция успешно создана");
       } catch (e) {}
     }
