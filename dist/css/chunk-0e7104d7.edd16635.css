@@ -1,0 +1,1 @@
+.app-page-content{display:flex;justify-content:space-around;flex-wrap:wrap}.app-page-content__item{width:calc(33% - 20px);min-width:200px;text-align:center;padding:50px 0;margin:10px 0;font-size:18px;color:#fff;cursor:pointer;background-color:#0ec261}.app-page-content__item:hover{background-color:#0da755}.app-page-content__item:active{background-color:#0d8646}
